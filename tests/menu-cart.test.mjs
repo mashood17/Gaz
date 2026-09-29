@@ -30,7 +30,8 @@ test('1. Menu Data Structure & Integrity', async (t) => {
       }
     }
 
-    assert.strictEqual(totalItems, 42, 'Expected exactly 42 verified menu items');
+    assert.ok(totalItems >= 200, `Expected at least 200 menu items, got ${totalItems}`);
+    assert.strictEqual(MENU_CATEGORIES.length, 15, 'Expected 15 categories');
   });
 
   await t.test('Snacks category matches exact physical card specifications (18 items)', () => {
@@ -79,14 +80,22 @@ test('1. Menu Data Structure & Integrity', async (t) => {
 test('2. Filtering Logic Validation', async (t) => {
   const allItems = MENU_CATEGORIES.flatMap((c) => c.items);
 
-  await t.test('Dietary filter ALL returns all 42 items', () => {
+  await t.test('Veg items exist in the dataset', () => {
     const vegCount = allItems.filter((i) => i.isVeg).length;
-    assert.strictEqual(vegCount, 42, 'All 42 items are verified pure veg in this dataset');
+    assert.ok(vegCount > 100, `Should have more than 100 veg items, got ${vegCount}`);
   });
 
-  await t.test('Dietary filter NON-VEG returns empty safely without crash', () => {
+  await t.test('Non-veg items exist and are plentiful', () => {
     const nonVegCount = allItems.filter((i) => !i.isVeg).length;
-    assert.strictEqual(nonVegCount, 0, 'No false non-veg items inferred');
+    assert.ok(nonVegCount > 50, `Should have more than 50 non-veg items, got ${nonVegCount}`);
+  });
+
+  await t.test('Non-veg items include chicken and mutton dishes', () => {
+    const nonVegItems = allItems.filter((i) => !i.isVeg);
+    const hasChicken = nonVegItems.some((i) => i.name.toLowerCase().includes('chicken'));
+    const hasMutton = nonVegItems.some((i) => i.name.toLowerCase().includes('mutton'));
+    assert.ok(hasChicken, 'Non-veg must include chicken dishes');
+    assert.ok(hasMutton, 'Non-veg must include mutton dishes');
   });
 
   await t.test('Search matching is case-insensitive', () => {
@@ -94,6 +103,24 @@ test('2. Filtering Logic Validation', async (t) => {
     const searchDosaUpper = allItems.filter((i) => i.name.toLowerCase().includes('DOSA'.toLowerCase()));
     assert.ok(searchDosaLower.length >= 5, 'Should find multiple dosa varieties');
     assert.strictEqual(searchDosaLower.length, searchDosaUpper.length);
+  });
+
+  await t.test('Additional Starters category exists with all specialties', () => {
+    const addStarters = MENU_CATEGORIES.find((c) => c.id === 'additional_starters');
+    assert.ok(addStarters, 'Additional Starters category must exist');
+    assert.ok(addStarters.items.length >= 17, 'Additional Starters must have at least 17 items');
+
+    const afghani = addStarters.items.find((i) => i.name.includes('Afghani'));
+    assert.ok(afghani, 'Afghani Chicken Tikka Boneless must exist');
+
+    const lasoni = addStarters.items.find((i) => i.name === 'Lasoni Kebab');
+    assert.ok(lasoni, 'Lasoni Kebab must exist');
+
+    const hariyali = addStarters.items.find((i) => i.name === 'Hariyali Kebab');
+    assert.ok(hariyali, 'Hariyali Kebab must exist');
+
+    const pakodi = addStarters.items.find((i) => i.name === 'Pakodi Kebab');
+    assert.ok(pakodi, 'Pakodi Kebab must exist');
   });
 });
 
