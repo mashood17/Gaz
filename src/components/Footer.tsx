@@ -147,7 +147,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenMenu }) => {
         {/* Copyright and Legal Notice */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#D9C4A1]/60 gap-4">
           <p>
-            © {new Date().getFullYear()} {RESTAURANT_INFO.name}. All rights reserved.
+            © 2026 {RESTAURANT_INFO.name}. All rights reserved.
           </p>
           <p className="tracking-wide">
             Designed for Royal Gazebo Restaurant · Mangaluru, Karnataka

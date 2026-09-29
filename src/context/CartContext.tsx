@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import { MENU_CATEGORIES, MenuItem } from '../data/menuData';
-import { RESTAURANT_INFO } from '../config/restaurant';
 
 export interface CartItem {
   item: MenuItem;

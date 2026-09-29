@@ -64,7 +64,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({
       clearTimeout(holdTimer);
       clearTimeout(doneTimer);
     };
-  }, [logoAnchorRef, onStageChange]);
+  }, [logoAnchorRef, onStageChange, splashStage]);
 
   const handleSkip = () => {
     sessionStorage.setItem('rg_splash_shown', 'true');

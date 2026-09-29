@@ -6,9 +6,7 @@ import {
   X,
   ShoppingCart,
   Sparkles,
-  MapPin,
   Clock,
-  Car,
   MessageSquare,
   Phone,
   ArrowRight,
@@ -93,10 +91,6 @@ export const DigitalMenuPage: React.FC<DigitalMenuPageProps> = ({ onBackToHome }
       };
     }).filter((cat) => cat.items.length > 0);
   }, [searchQuery, dietaryFilter, selectedCategory]);
-
-  const totalMatchingDishes = useMemo(() => {
-    return filteredCategories.reduce((sum, c) => sum + c.items.length, 0);
-  }, [filteredCategories]);
 
   // Toggle accordion expand (keeps only 1 dish expanded at a time)
   const handleToggleExpand = (itemId: string) => {
@@ -495,7 +489,7 @@ export const DigitalMenuPage: React.FC<DigitalMenuPageProps> = ({ onBackToHome }
               Mischief Mall, Ground Floor, K S Rao Road, Mangaluru, Karnataka
             </p>
             <p>
-              © {new Date().getFullYear()} Royal Gazebo Restaurant.
+              © 2026 Royal Gazebo Restaurant.
             </p>
           </div>
         </div>
